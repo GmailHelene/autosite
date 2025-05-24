@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_title }}</title>
+    <meta name="description" content="{{ site_description }}">
+    <meta name="author" content="{{ author_name }}">
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: #ff6b6b;
+            --text-color: #ffffff;
+            --bg-color: #1e252d;
+            --accent-color: #2a3138;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20" fill="white" opacity="0.1"><path d="M0,10 Q25,0 50,10 T100,10 V20 H0 Z"/></svg>') center/cover;
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .continue-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header .continue-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Navigation */
+        .nav {
+            background: var(--accent-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav a:hover {
+            background: var(--primary-color);
+        }
+        
+        /* Main Content */
+        .main {
+            padding: 3rem 0;
+        }
+        
+        .posts {
+            display: grid;
+            gap: 3rem;
+        }
+        
+        .post {
+            background: var(--accent-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .post:hover {
+            transform: translateY(-5px);
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .post-content {
+            padding: 2rem;
+        }
+        
+        .post-date {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .post-excerpt {
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+        
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #1a1f25;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+        
+        .contact-form {
+            background: var(--accent-color);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+        
+        .contact-form h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-color);
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            opacity: 0.8;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>{{ site_title }}</h1>
+            <p class="subtitle">{{ site_description }}</p>
+            <a href="#main" class="continue-btn">Fortsett</a>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                {% for item in menu_items %}
+                <li><a href="{{ item.url }}">{{ item.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main" class="main">
+        <div class="container">
+            <div class="posts">
+                <article class="post">
+                    <div class="post-image">BLOG</div>
+                    <div class="post-content">
+                        <div class="post-date">{{ current_year }}-05-24</div>
+                        <h2 class="post-title"><a href="#">Velkommen til min blog</a></h2>
+                        <p class="post-excerpt">Dette er mitt første innlegg på denne fantastiske bloggen. Her vil jeg dele tanker, ideer og erfaringer innen mitt fagfelt.</p>
+                        <a href="#" class="read-more">Les mer →</a>
+                    </div>
+                </article>
+
+                <article class="post">
+                    <div class="post-image">TIPS</div>
+                    <div class="post-content">
+                        <div class="post-date">{{ current_year }}-05-23</div>
+                        <h2 class="post-title"><a href="#">Tips for effektiv arbeidsflyt</a></h2>
+                        <p class="post-excerpt">I dette innlegget deler jeg mine beste tips for å optimalisere arbeidsflyten og øke produktiviteten i hverdagen.</p>
+                        <a href="#" class="read-more">Les mer →</a>
+                    </div>
+                </article>
+
+                <article class="post">
+                    <div class="post-image">TECH</div>
+                    <div class="post-content">
+                        <div class="post-date">{{ current_year }}-05-22</div>
+                        <h2 class="post-title"><a href="#">Fremtidens teknologi</a></h2>
+                        <p class="post-excerpt">En dypere titt på teknologitrendene som vil forme fremtiden, og hvordan vi kan forberede oss på endringene.</p>
+                        <a href="#" class="read-more">Les mer →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer id="kontakt" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-form">
+                    <h3>Send meg en melding</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Ditt navn" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Din e-post" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="4" placeholder="Din melding" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send melding</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Kontakt informasjon</h3>
+                    <div class="contact-item">
+                        <span>👤</span>
+                        <span>{{ author_name }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <span>{{ contact_email }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🌐</span>
+                        <span>www.minblog.no</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">📷</a>
+                        <a href="#">🐦</a>
+                        <a href="#">💼</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Takk for din melding! Jeg vil kontakte deg snart.');
+        });
+    </script>
+</body>
+</html>
+                        <div class="post-date">{{ current_year }}-05-22</div>
+                        <h2 class="post-title"><a href="#">Fremtidens teknologi</a></h2>
+                        <p class="post-excerpt">En dypere titt på teknologitrendene som vil forme fremtiden, og hvordan vi kan forberede oss på endringene.</p>
+                        <a href="#" class="read-more">Les mer →</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer id="kontakt" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-form">
+                    <h3>Send meg en melding</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="Ditt navn" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Din e-post" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea rows="4" placeholder="Din melding" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send melding</button>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <h3>Kontakt informasjon</h3>
+                    <div class="contact-item">
+                        <span>👤</span>
+                        <span>{{ author_name }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>✉️</span>
+                        <span>{{ contact_email }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🌐</span>
+                        <span>www.minblog.no</span>
+                    </div>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">📷</a>
+                        <a href="#">🐦</a>
+                        <a href="#">💼</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Takk for din melding! Jeg vil kontakte deg snart.');
+        });
+    </script>
+</body>
+</html>

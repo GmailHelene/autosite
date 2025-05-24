@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Nettside Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 HTML Nettside Generator</h1>
+            <p>Lag profesjonelle nettsider på sekunder - ingen koding nødvendig!</p>
+        </div>
+
+        <div class="content">
+            <div class="form-section">
+                <h3 class="section-title">📝 Nettside Innstillinger</h3>
+                
+                <div class="form-group">
+                    <label for="siteTitle">Nettsidens tittel:</label>
+                    <input type="text" id="siteTitle" class="form-control" placeholder="Min Fantastiske Nettside" value="Min Fantastiske Nettside">
+                </div>
+
+                <div class="form-group">
+                    <label for="siteDescription">Beskrivelse:</label>
+                    <textarea id="siteDescription" class="form-control" placeholder="En kort beskrivelse av nettsiden din...">Velkommen til min fantastiske nettside! Her finner du alt du trenger å vite om våre tjenester og produkter.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="authorName">Forfatter/Eier:</label>
+                    <input type="text" id="authorName" class="form-control" placeholder="Ditt navn" value="Helene Grønberg">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Kontakt e-post:</label>
+                    <input type="email" id="contactEmail" class="form-control" placeholder="din@email.no" value="kontakt@mittfirma.no">
+                </div>
+
+                <div class="form-group">
+                    <label for="heroHeading">Hero Overskrift (for Landing Page):</label>
+                    <input type="text" id="heroHeading" class="form-control" placeholder="Din Hovedoverskrift Her" value="Velkommen til Fremtiden">
+                </div>
+
+                <div class="form-group">
+                    <label for="heroSubheading">Hero Underoverskrift:</label>
+                    <input type="text" id="heroSubheading" class="form-control" placeholder="En kraftfull underoverskrift" value="Vi leverer innovative løsninger for din bedrift">
+                </div>
+
+                <h3 class="section-title">🎨 Velg Tema</h3>
+                <div class="theme-preview">
+                    <div class="theme-card selected" data-theme="landing_page">
+                        <h4>🚀 Landing Page</h4>
+                        <p>Kraftfull landingsside for bedrifter og tjenester</p>
+                    </div>
+                    <div class="theme-card" data-theme="massively_blog">
+                        <h4>📰 Massively Blog</h4>
+                        <p>Elegant blog-design inspirert av HTML5 UP</p>
+                    </div>
+                    <div class="theme-card" data-theme="modern_business">
+                        <h4>🏢 Moderne Business</h4>
+                        <p>Profesjonell og ren design for bedrifter</p>
+                    </div>
+                    <div class="theme-card" data-theme="creative_portfolio">
+                        <h4>🎨 Kreativ Portfolio</h4>
+                        <p>Fargerik design for kreative fagfolk</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="primaryColor">Hovedfarge:</label>
+                    <input type="color" id="primaryColor" class="form-control color-input" value="#4facfe">
+                </div>
+
+                <button class="btn" onclick="generatePreview()">🔄 Oppdater Forhåndsvisning</button>
+            </div>
+
+            <div class="preview-section">
+                <h3 class="section-title">👁️ Forhåndsvisning</h3>
+                <iframe id="previewFrame" class="preview-frame"></iframe>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h3 style="margin-bottom: 20px; color: #333;">💾 Last ned din nettside</h3>
+            <button class="btn download-btn" onclick="downloadHTML()">📄 Last ned HTML</button>
+            <button class="btn download-btn" onclick="viewCode()">👁️ Vis kode</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
+</body>
+</html>

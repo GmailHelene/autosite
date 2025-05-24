@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ site_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme_choice + '.css') }}">
+</head>
+<body>
+    <header>
+        <h1>{{ site_name }}</h1>
+        <nav>
+            <ul>
+                {% for item in menu %}
+                <li><a href="#{{ item|lower|replace(' ', '_')|replace(',', '') }}">{{ item }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% for title, content in pages %}
+        <section id="{{ title|lower|replace(' ', '_')|replace(',', '') }}">
+            <h2>{{ title }}</h2>
+            <p>{{ content }}</p>
+        </section>
+        {% endfor %}
+    </main>
+</body>
+</html>

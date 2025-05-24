@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Nettside Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/generator.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌐 HTML Nettside Generator</h1>
+            <p>Lag profesjonelle nettsider på sekunder - ingen koding nødvendig!</p>
+        </header>
+
+        <main class="main-content">
+            <div class="form-section">
+                <h2>📝 Nettside Innstillinger</h2>
+                
+                <form id="generatorForm">
+                    <div class="form-group">
+                        <label for="siteTitle">Nettsidens tittel:</label>
+                        <input type="text" id="siteTitle" name="site_title" class="form-control" 
+                               placeholder="Min Fantastiske Nettside" value="Min Fantastiske Nettside">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="siteDescription">Beskrivelse:</label>
+                        <textarea id="siteDescription" name="site_description" class="form-control" 
+                                  placeholder="En kort beskrivelse av nettsiden din...">Velkommen til min fantastiske nettside! Her finner du alt du trenger å vite om våre tjenester og produkter.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="authorName">Forfatter/Eier:</label>
+                        <input type="text" id="authorName" name="author_name" class="form-control" 
+                               placeholder="Ditt navn" value="Helene Grønberg">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactEmail">Kontakt e-post:</label>
+                        <input type="email" id="contactEmail" name="contact_email" class="form-control" 
+                               placeholder="din@email.no" value="kontakt@mittfirma.no">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="heroHeading">Hero Overskrift (for Landing Page):</label>
+                        <input type="text" id="heroHeading" name="hero_heading" class="form-control" 
+                               placeholder="Din Hovedoverskrift Her" value="Velkommen til Fremtiden">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="heroSubheading">Hero Underoverskrift:</label>
+                        <input type="text" id="heroSubheading" name="hero_subheading" class="form-control" 
+                               placeholder="En kraftfull underoverskrift" value="Vi leverer innovative løsninger for din bedrift">
+                    </div>
+                        <input type="hidden" id="selectedTheme" name="theme_choice" value="landing_page_theme">
+                    <h3>🎨 Velg Tema</h3>
+                    <div class="theme-selector">
+                        {% for theme_id, theme_info in themes.items() %}
+  <div class="theme-card" data-theme="{{ theme_id }}">
+    <h4>{{ theme_info.name }}</h4>
+    <p>{{ theme_info.description }}</p>
+  </div>
+{% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="primaryColor">Hovedfarge:</label>
+                        <input type="color" id="primaryColor" name="primary_color" class="color-input" value="#4facfe">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="updatePreview()">
+                        🔄 Oppdater Forhåndsvisning
+                    </button>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <h2>👁️ Forhåndsvisning</h2>
+                <div class="preview-container">
+                    <iframe id="previewFrame" class="preview-frame" sandbox="allow-same-origin allow-scripts"></iframe>
+                </div>
+                <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Genererer forhåndsvisning...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="download-section">
+            <h3>💾 Last ned din nettside</h3>
+            <div class="button-group">
+                <button class="btn btn-success" onclick="downloadHTML()">
+                    📄 Last ned HTML
+                </button>
+                <button class="btn btn-info" onclick="viewCode()">
+                    👁️ Vis kode
+                </button>
+                <button class="btn btn-secondary" onclick="copyCode()">
+                    📋 Kopier kode
+                </button>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
+</body>
+</html>
+

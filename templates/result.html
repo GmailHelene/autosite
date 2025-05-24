@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generering Fullført</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        h1 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .flash-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nettsted Generert!</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if zip_file %}
+            <p>
+                Ditt nettsted er generert og pakket som en zip-fil: <strong>{{ zip_file }}</strong>
+            </p>
+            {% if index_file %}
+                <p>
+                    <a href="{{ url_for('view_site', filename=index_file) }}" target="_blank">Se Nettstedet (forhåndsvisning)</a>
+                    |
+                    <a href="{{ url_for('download_file', filename=zip_file) }}">Last Ned Nettstedet (ZIP)</a>
+                </p>
+                <p>
+                    *Merk: Forhåndsvisningen viser innholdet i nettleseren din direkte fra serveren.
+                    For å se nettstedet fullt ut som en statisk side lokalt, last ned ZIP-filen og pakk ut innholdet.
+                </p>
+            {% else %}
+                <p>
+                    Nettstedet ble generert, men ingen spesifikk startside ble funnet for forhåndsvisning.
+                </p>
+                <a href="{{ url_for('download_file', filename=zip_file) }}">Last Ned Nettstedet (ZIP)</a>
+            {% endif %} {# <-- DITT MANGLENDE ENDIF HER! #}
+        {% else %}
+            <p>Ingen zip-fil ble angitt. Noe gikk kanskje galt under genereringen.</p>
+            <p><a href="{{ url_for('index') }}">Gå tilbake</a></p>
+        {% endif %} {# <-- OG DITT MANGLENDE ENDIF HER! #}
+    </div>
+</body>
+</html>

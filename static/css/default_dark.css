@@ -1,0 +1,49 @@
+/* Dette er et eksempel på et mørkt tema */
+body {
+    background-color: #343a40; /* Mørk grå bakgrunn */
+    color: #f8f9fa; /* Lys tekst */
+}
+
+/* Overstyrer spesifikke elementer for mørkt tema */
+.header, .footer {
+    background-color: #212529; /* Enda mørkere for header/footer */
+}
+
+.main-nav a {
+    color: #f8f9fa;
+}
+
+.main-nav a:hover {
+    background-color: #495057; /* Mørkere hover */
+}
+
+.container {
+    background-color: #495057; /* Litt lysere enn body, men mørk */
+    border: 1px solid #6c757d;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+table {
+    border: 1px solid #6c757d;
+    background-color: #3f444a;
+}
+
+table, th, td {
+    border: 1px solid #6c757d;
+}
+
+th {
+    background-color: #2c3034;
+}
+
+tr:nth-child(even) {
+    background-color: #555c63;
+}
+
+a {
+    color: #89cff0; /* Lysere blå for lenker */
+}
+
+a:hover {
+    color: #b0e0e6;
+}

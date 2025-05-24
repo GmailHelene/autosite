@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} - {{ site_title }}</title>
+    <meta name="description" content="{{ meta_description }}">
+    <meta name="keywords" content="{{ meta_keywords }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/' + theme_choice + '.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Grunnleggende stiler som kan overstyres av tema-CSS */
+         body {
+            margin: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Standard header og navigasjon, kan styles videre i tema-CSS */
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .site-logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .nav-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .nav-menu li {
+            margin-left: 20px;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #007bff;
+        }
+
+        /* Standard footer, kan styles videre i tema-CSS */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="site-logo">{{ site_logo_text if theme_choice == 'landing_page_theme' else site_title }}</a>
+                <ul class="nav-menu">
+                    {% for item in menu_items %}
+                        <li><a href="{{ item.url }}">{{ item.text }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% if theme_choice == 'landing_page_theme' %}
+            <section class="hero-section">
+                <div class="container">
+                    <h1>{{ hero_heading }}</h1>
+                    <p>{{ hero_subheading }}</p>
+                    <a href="#kontakt" class="cta-button">Kom i gang!</a> {# Eksempel CTA-knapp #}
+                </div>
+            </section>
+
+            <section class="features-section">
+                <div class="container">
+                    <h2>Våre Tjenester</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h3>Rask Utvikling</h3>
+                            <p>Leverer prosjekter med lynets hastighet, uten å kompromisse med kvaliteten.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Moderne Design</h3>
+                            <p>Estetisk tiltalende og brukervennlige grensesnitt som engasjerer dine besøkende.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Skalerbare Løsninger</h3>
+                            <p>Bygger plattformer som vokser med dine behov og fremtidige krav.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact-section" id="kontakt">
+                <div class="container">
+                    <h2>Kontakt Oss</h2>
+                    <p>Har du spørsmål? Ikke nøl med å ta kontakt!</p>
+                    <form class="contact-form">
+                        <input type="text" placeholder="Ditt navn">
+                        <input type="email" placeholder="Din e-post">
+                        <textarea placeholder="Din melding"></textarea>
+                        <button type="submit">Send Melding</button>
+                    </form>
+                </div>
+            </section>
+
+        {% else %}
+            <div class="container page-content">
+                <h1>{{ page_title }}</h1>
+                {% for block in page_content %}
+                    {% if block.type == 'p' %}
+                        <p>{{ block.text | safe }}</p>
+                    {% elif block.type == 'h2' %}
+                        <h2>{{ block.text | safe }}</h2>
+                    {% elif block.type == 'img' %}
+                        <img src="{{ url_for('static', filename='images/' + block.src) }}" alt="{{ block.alt }}">
+                    {# Legg til flere innholdstyper her etter behov #}
+                    {% else %}
+                        <p>{{ block.text | safe }}</p> {# Fallback for ukjente typer #}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <div class="container">
+    <p>{{ footer_text if theme_choice == 'landing_page_theme' else '&copy; ' + current_year|string + ' ' + site_title + '. Alle rettigheter reservert.' | safe }}</p>
+    </footer>
+</body>
+</html>

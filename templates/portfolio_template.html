@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_title }}</title>
+    <meta name="description" content="{{ site_description }}">
+    <meta name="author" content="{{ author_name }}">
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffe66d;
+            --text-color: #2c3e50;
+            --bg-color: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" opacity="0.1"><circle cx="20" cy="20" r="5"/><circle cx="80" cy="40" r="8"/><circle cx="50" cy="70" r="6"/><circle cx="10" cy="80" r="4"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+            50% { transform: translateX(20px) translateY(-20px) rotate(180deg); }
+        }
+        
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Portfolio Section */
+        .portfolio {
+            padding: 4rem 0;
+        }
+        
+        .portfolio h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .portfolio-image {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .portfolio-content {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .portfolio-item p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 4rem 0;
+            background: var(--accent-color);
+            text-align: center;
+        }
+        
+        .about h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .about p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--text-color);
+        }
+        
+        .skills {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .skill {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .skill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .services h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .service-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .social-link {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-2px);
+            color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills {
+                justify-content: center;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>{{ site_title }}</h1>
+            <p>{{ site_description }}</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                {% for item in menu_items %}
+                <li><a href="{{ item.url }}">{{ item.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
+
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2>Mitt Portfolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🎨</div>
+                    <div class="portfolio-content">
+                        <h3>Kreativ Design</h3>
+                        <p>Et eksempel på moderne og innovativ designtilnærming som fanger oppmerksomhet og skaper engasjement.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Design</span>
+                            <span class="tag">Kreativitet</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">📸</div>
+                    <div class="portfolio-content">
+                        <h3>Visuell Identitet</h3>
+                        <p>Utvikling av helhetlig visuell identitet for merkevarebygging og gjenkjennelse på tvers av alle plattformer.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Identitet</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">💡</div>
+                    <div class="portfolio-content">
+                        <h3>Konseptuell Løsning</h3>
+                        <p>Kreativ problemløsning gjennom innovative tilnærminger og designtenkning som leverer resultater.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Konsept</span>
+                            <span class="tag">Løsning</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🌟</div>
+                    <div class="portfolio-content">
+                        <h3>Premium Prosjekt</h3>
+                        <p>Høykvalitets arbeid som demonstrerer teknisk dyktighet og kreativ visjon i perfekt harmoni.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Premium</span>
+                            <span class="tag">Kvalitet</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🚀</div>
+                    <div class="portfolio-content">
+                        <h3>Innovativ Tilnærming</h3>
+                        <p>Nyskapende metoder og teknologier som skaper unike opplevelser og setter nye standarder.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Innovasjon</span>
+                            <span class="tag">Teknologi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">🎯</div>
+                    <div class="portfolio-content">
+                        <h3>Målrettet Strategi</h3>
+                        <p>Strategisk planlegging og gjennomføring som treffer blink og leverer målbare resultater.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Strategi</span>
+                            <span class="tag">Resultater</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="om" class="about">
+        <div class="container">
+            <h2>Om Meg</h2>
+            <p>Jeg er en lidenskapelig kreativ profesjonell som brenner for å skape meningsfulle og visuelt slående løsninger. Med flere års erfaring kombinerer jeg teknisk ekspertise med kunstnerisk visjon.</p>
+            <p>Min tilnærming er å forstå hver kundes unike behov og levere skreddersydde løsninger som overgår forventningene.</p>
+            <div class="skills">
+                <div class="skill">Grafisk Design</div>
+                <div class="skill">Kreativitet</div>
+                <div class="skill">Innovasjon</div>
+                <div class="skill">Storytelling</div>
+                <div class="skill">Merkevarebygging</div>
+                <div class="skill">Strategisk Tenkning</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tjenester" class="services">
+        <div class="container">
+            <h2>Mine Tjenester</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">🎨</div>
+                    <h3>Grafisk Design</h3>
+                    <p>Fra logo til komplette visuelle identiteter. Jeg skaper design som kommuniserer og engasjerer.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🖥️</div>
+                    <h3>Webdesign</h3>
+                    <p>Responsive og brukervennlige nettsider som ser fantastiske ut på alle enheter.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">📱</div>
+                    <h3>Digital Markedsføring</h3>
+                    <p>Kreative kampanjer og innhold som fanger oppmerksomhet i det digitale landskapet.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🏷️</div>
+                    <h3>Merkevarebygging</h3>
+                    <p>Helhetlig merkevarearbeid som skaper gjenkjennelse og bygger tillit.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">📊</div>
+                    <h3>Presentasjonsdesign</h3>
+                    <p>Visuelt imponerende presentasjoner som får budskapet ditt frem på en kraftfull måte.</p>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🎬</div>
+                    <h3>Visuelt Innhold</h3>
+                    <p>Engasjerende visuelt innhold for sosiale medier, nettsider og markedsføring.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" class="contact">
+        <div class="container">
+            <h2>La oss skape noe fantastisk sammen!</h2>
+            <p>Har du et spennende prosjekt? Jeg vil gjerne høre om det og diskutere hvordan vi kan bringe dine ideer til live.</p>
+            <br>
+            <div class="contact-buttons">
+                <a href="mailto:{{ contact_email }}" class="contact-button">📧 Send E-post</a>
+                <a href="#" class="contact-button">💼 Se CV</a>
+                <a href="#" class="contact-button">📞 Ring Meg</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="social-link" title="LinkedIn">💼</a>
+                <a href="#" class="social-link" title="Instagram">📷</a>
+                <a href="#" class="social-link" title="Behance">🎨</a>
+                <a href="#" class="social-link" title="Dribbble">🏀</a>
+                <a href="mailto:{{ contact_email }}" class="social-link" title="E-post">✉️</a>
+            </div>
+            <p>&copy; {{ current_year }} {{ author_name }}. Laget med ❤️ og kreativitet.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Parallax effect for header
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            if (header) {
+                header.style.transform = 'translateY(' + (scrolled * 0.5) + 'px)';
+            }
+        });
+
+        // Add animation to portfolio items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe portfolio items
+        document.querySelectorAll('.portfolio-item, .service-item').forEach(function(item) {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'all 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Add hover effect to skills
+        document.querySelectorAll('.skill').forEach(function(skill) {
+            skill.addEventListener('mouseenter', function() {
+                this.style.background = 'var(--primary-color)';
+                this.style.color = 'white';
+            });
+            
+            skill.addEventListener('mouseleave', function() {
+                this.style.background = 'white';
+                this.style.color = 'var(--primary-color)';
+            });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>

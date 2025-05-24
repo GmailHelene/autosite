@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} - {{ site_title }}{% endblock %}
+{% block meta_description %}{{ page.meta_description | default(site_title) }}{% endblock %}
+{% block meta_keywords %}{{ page.meta_keywords | default(site_title) }}{% endblock %}
+
+{% block content %}
+    {% for element in page.content %}
+        {% if element.type == 'h1' %}
+            <h1>{{ element.text | default('') }}</h1>
+        {% elif element.type == 'h2' %}
+            <h2>{{ element.text | default('') }}</h2>
+        {% elif element.type == 'h3' %}
+            <h3>{{ element.text | default('') }}</h3>
+        {% elif element.type == 'p' %}
+            {# Placeholder-tekst er nå behandlet i Python-skriptet, så 'text' skal alltid finnes #}
+            <p>{{ element.text | default('') }}</p>
+        {% elif element.type == 'img' %}
+            <img src="{{ element.src | default('') }}" alt="{{ element.alt | default('') }}" {% if element.title %}title="{{ element.title }}"{% endif %}>
+        {% elif element.type == 'a' %}
+            <p><a href="{{ element.href | default('#') }}">{{ element.text | default('Lenke') }}</a></p>
+        {% elif element.type == 'ul' %}
+            <ul>
+                {% for item in element['items'] | default([]) %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% elif element.type == 'ol' %}
+            <ol>
+                {% for item in element['items'] | default([]) %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ol>
+        {% elif element.type == 'table' %}
+            <table>
+                {% if element['header'] is defined and element['header'] is not none %}
+                    <thead>
+                        <tr>
+                            {% for h_item in element['header'] %}
+                                <th>{{ h_item }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                {% endif %}
+                {% if element['rows'] is defined and element['rows'] is not none %}
+                    <tbody>
+                        {% for row in element['rows'] %}
+                            <tr>
+                                {% for cell in row %}
+                                    <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                {% endif %}
+            </table>
+        {% elif element.type == 'video' %}
+            <div class="video-container">
+                <iframe src="{{ element.src | default('') }}"
+                        title="{{ element.title | default('YouTube video') }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,46 @@
+
+/* Mer spesifikke elementer kan overstyres her */
+.container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+}/* light_theme.css */
+body {
+    background-color: #e0e0e0; /* Lys grå bakgrunn */
+    color: #333333; /* Mørk tekst */
+}
+:root {
+    --primary-color: #007bff; /* Blå */
+    --secondary-color: #6c757d; /* Grå */
+}
+/* Resten av tema-spesifikk CSS */
+.container {
+    background-color: #ffffff; /* Hvit boks */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ced4da; /* Grå kant */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #495057; /* Mørk grå overskrifter */
+}
+
+a {
+    color: #007bff; /* Standard blå lenke */
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+table {
+    border: 1px solid #dee2e6;
+}
+
+th, td {
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa; /* Lys bakgrunn for celler */
+}
+
+th {
+    background-color: #e9ecef; /* Lysere bakgrunn for tabellhode */
+    color: #495057;
+}
